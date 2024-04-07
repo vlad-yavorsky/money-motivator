@@ -1,0 +1,24 @@
+<div class="tasks-container">
+
+  <div class="task-header">
+    <span class="task-column task-name">Task Name</span>
+    <span class="task-column task-status">Status</span>
+    <span class="task-column task-price">Price</span>
+    <span class="task-column task-author">Author</span>
+    <span class="task-column task-assignee">Assignee</span>
+  </div>
+
+  <div *ngIf="tasks && tasks.length > 0; else noTasksMessage" class="task-list">
+    <div *ngFor="let task of tasks" class="task-item">
+      <a class="task-column task-name" [routerLink]="['/projects', task.projectId, 'tasks', task.id]">{{ task.name }}</a>
+      <span class="task-column task-status">{{ task.status }}</span>
+      <span class="task-column task-price">{{ task.price | currency : '₴' }}</span>
+      <span class="task-column task-author">{{ task.authorEmail }}</span>
+      <span class="task-column task-assignee">{{ task.assigneeEmail }}</span>
+    </div>
+  </div>
+
+  <ng-template #noTasksMessage>
+    <p>There are no tasks</p>
+  </ng-template>
+</div>

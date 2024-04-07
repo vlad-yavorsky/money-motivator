@@ -1,0 +1,9 @@
+<div *ngIf="user" class="profile-container">
+  <h1>User Profile</h1>
+  <p><strong>ID:</strong> {{user.id}}</p>
+  <p><strong>Email:</strong> {{user.email}}</p>
+  <p><strong>Name:</strong> {{user.firstName}} {{user.lastName}}</p>
+  <p><strong>Account Created:</strong> {{user.created | date: 'dd MMM yyyy'}}</p>
+  <p><strong>Roles:</strong> {{user.roles}}</p>
+  <p><strong>Balance:</strong> {{user.balance | currency: '₴'}}</p>
+</div>

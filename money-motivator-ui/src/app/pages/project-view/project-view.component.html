@@ -1,0 +1,11 @@
+<mat-spinner *ngIf="loading"></mat-spinner>
+
+<div class="project-view-container" *ngIf="project">
+  <h1>{{ project.name }}</h1>
+  <p><strong>Description:</strong> {{ project.description }}</p>
+  <p><strong>Owner Email:</strong> {{ project.ownerEmail }}</p>
+  <p><strong>Created On:</strong> {{ project.created | date }}</p>
+</div>
+
+<h2>Project Tasks</h2>
+<app-task-list [tasks]="tasks"></app-task-list>

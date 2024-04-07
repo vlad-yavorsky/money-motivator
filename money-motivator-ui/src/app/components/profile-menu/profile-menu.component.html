@@ -1,0 +1,20 @@
+<div *ngIf="user">
+  <img class="avatar" [matMenuTriggerFor]="menu" [src]="'assets/unknown_user.png'" alt="">
+  <mat-menu #menu="matMenu">
+    <div class="profile-details">
+      <p>{{ user.firstName }} {{ user.lastName }}</p>
+    </div>
+    <button mat-menu-item disableRipple>
+      <mat-icon>payments</mat-icon>
+      <span>{{user.balance | currency: '₴'}}</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/profile']">
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Sign Out</span>
+    </button>
+  </mat-menu>
+</div>

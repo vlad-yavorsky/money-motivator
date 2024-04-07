@@ -1,0 +1,10 @@
+.chart-container {
+  height: auto;
+  width: 100%;
+}
+
+highcharts-chart {
+  width: 100%;
+  height: 100%;
+  display: block;
+}

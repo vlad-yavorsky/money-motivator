@@ -1,0 +1,12 @@
+<div class="chart-container">
+  <h2>Dashboard</h2>
+  <h2 style="text-align: center;">Tasks done during last year</h2>
+  <highcharts-chart *ngIf="chartOptions" [Highcharts]="Highcharts" [options]="chartOptions">
+  </highcharts-chart>
+</div>
+
+<h2>Your tasks</h2>
+<app-task-list [tasks]="tasksToDo"></app-task-list>
+
+<h2>Tasks you supervising</h2>
+<app-task-list [tasks]="tasksToVerify"></app-task-list>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet id="202404042153-1" author="vyavorskyi">
+        <createSequence sequenceName="t_user_id_seq" startValue="1" incrementBy="1"/>
+        <createTable tableName="t_user">
+            <column name="id" type="bigint" defaultValueSequenceNext="t_user_id_seq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="email" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="timestamp with timezone" defaultValueDate="current_timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="roles" type="jsonb" defaultValue="[]">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance" type="numeric(10,2)" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="202404042153-2" author="vyavorskyi">
+        <createSequence sequenceName="t_project_id_seq" startValue="1" incrementBy="1"/>
+        <createTable tableName="t_project">
+            <column name="id" type="bigint" defaultValueSequenceNext="t_project_id_seq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_t_task_owner_id"
+                             references="t_user(id)"/>
+            </column>
+            <column name="created" type="timestamp with timezone" defaultValueDate="current_timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="202404042153-3" author="vyavorskyi">
+        <createTable tableName="t_project_user">
+            <column name="project_id" type="bigint">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_t_project_user_id"
+                             foreignKeyName="fk_t_task_project_id"
+                             references="t_project(id)"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_t_project_user_id"
+                             foreignKeyName="fk_t_task_user_id"
+                             references="t_user(id)"/>
+            </column>
+            <column name="role" type="varchar(20)"/>
+            <column name="invited" type="timestamp with timezone" defaultValueDate="current_timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="202404042153-4" author="vyavorskyi">
+        <createSequence sequenceName="t_task_id_seq" startValue="1" incrementBy="1"/>
+        <createTable tableName="t_task">
+            <column name="id" type="bigint" defaultValueSequenceNext="t_task_id_seq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="numeric(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="project_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_t_task_project_id"
+                             references="t_project(id)"/>
+            </column>
+            <column name="author_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_t_task_author_id"
+                             references="t_user(id)"/>
+            </column>
+            <column name="assignee_id" type="bigint">
+                <constraints foreignKeyName="fk_t_task_assignee_id"
+                             references="t_user(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="202404042153-5" author="vyavorskyi">
+        <insert tableName="t_user">
+            <column name="email" value="admin@example.com"/>
+            <column name="password" value="$2a$10$ZqY2GxhILLonRx9HGTYLAu7dGfS/l2rSAdZmE8907FiWxxyA21Nry"/>
+            <column name="first_name" value="admin"/>
+            <column name="last_name" value="admin"/>
+            <column name="roles" value='["ROLE_ADMIN"]'/>
+        </insert>
+        <insert tableName="t_user">
+            <column name="email" value="user@example.com"/>
+            <column name="password" value="$2a$10$iXTJlcHzps7t0ZmEz1NSeOVf/WwwlPj3gVpqL.I/Zbvx4JXF9L75O"/>
+            <column name="first_name" value="user"/>
+            <column name="last_name" value="user"/>
+            <column name="roles" value='["ROLE_USER"]'/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="202404042153-6" author="vyavorskyi">
+        <createSequence sequenceName="t_task_status_history_id_seq" startValue="1" incrementBy="1"/>
+        <createTable tableName="t_task_status_history">
+            <column name="id" type="bigint" defaultValueSequenceNext="t_task_status_history_id_seq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="task_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_t_task_status_history_task_id"
+                             references="t_task(id)"/>
+            </column>
+            <column name="status" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="timestamp with timezone" defaultValueDate="current_timestamp"/>
+            <column name="created_by" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="202404042153-7" author="vyavorskyi">
+        <createSequence sequenceName="t_balance_history_id_seq" startValue="1" incrementBy="1"/>
+        <createTable tableName="t_balance_history">
+            <column name="id" type="bigint" defaultValueSequenceNext="t_balance_history_id_seq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_t_balance_history_user_id"
+                             references="t_user(id)"/>
+            </column>
+            <column name="operation" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="numeric(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="timestamp with timezone" defaultValueDate="current_timestamp"/>
+            <column name="remaining" type="numeric(10,2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,44 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.my-container {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: minmax(auto, 1440px);
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (max-width: 1440px) {
+  .my-container {
+    grid-template-columns: minmax(auto, 1200px);
+  }
+}
+
+@media (max-width: 1200px) {
+  .my-container {
+    grid-template-columns: minmax(auto, 992px);
+  }
+}
+
+@media (max-width: 992px) {
+  .my-container {
+    grid-template-columns: minmax(auto, 768px);
+  }
+}
+
+@media (max-width: 768px) {
+  .my-container {
+    grid-template-columns: minmax(auto, 576px);
+  }
+}
+
+.active {
+  border-bottom: 3px solid white;
+  border-radius: 0;
+}
+
+.mat-toolbar-buttons:not(:last-child) button {
+  margin-right: 4px;
+}

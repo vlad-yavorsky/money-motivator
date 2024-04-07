@@ -1,0 +1,38 @@
+.tasks-container {
+  margin-top: 20px;
+}
+
+.task-header, .task-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.task-header {
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+.task-column {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.task-name {
+  flex: 2;
+}
+
+.task-status {
+}
+
+.task-price {
+  color: green;
+}
+
+.task-author, .task-assignee {
+}
+
+.task-item:last-child {
+  margin-bottom: 0;
+}

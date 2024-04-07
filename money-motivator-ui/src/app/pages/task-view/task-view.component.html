@@ -1,0 +1,20 @@
+<mat-spinner *ngIf="loading"></mat-spinner>
+<div class="tasks-container" *ngIf="task">
+  <h2>{{ task.name }}</h2>
+  <div class="task">
+    <div class="task-row">
+      <div class="task-description">
+        <p>{{ task.description }}</p>
+      </div>
+
+      <div class="task-details">
+        <p><strong>Status:</strong> {{ task.status }}</p>
+        <p><strong>Price:</strong> {{ task.price | currency: '₴' }}</p>
+        <p><strong>Author:</strong> {{ task.authorEmail }}</p>
+        <p><strong>Assignee:</strong> {{ task.assigneeEmail }}</p>
+      </div>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="verifyTask()" [disabled]="task.status === TaskStatus.VERIFIED || task.status === TaskStatus.PAID">VERIFY</button>
+  </div>
+</div>
