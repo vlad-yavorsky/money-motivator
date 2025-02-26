@@ -3,9 +3,7 @@
   <h2>{{ task.name }}</h2>
   <div class="task">
     <div class="task-row">
-      <div class="task-description">
-        <p>{{ task.description }}</p>
-      </div>
+      <div class="task-description" [innerHTML]="task.description"></div>
 
       <div class="task-details">
         <p><strong>Status:</strong> {{ task.status }}</p>

@@ -48,6 +48,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String tokenFromCookies = extractTokenFromCookies(request.getCookies());
             if (tokenFromCookies != null) {
                 authenticate(request, tokenFromCookies);
+//            } else {
+//                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                return;
             }
         }
         filterChain.doFilter(request, response);

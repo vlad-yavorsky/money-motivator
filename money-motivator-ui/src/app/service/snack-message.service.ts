@@ -6,7 +6,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 })
 export class SnackMessageService {
 
-  SNACKBAR_MILLIS = 500000;
+  SNACKBAR_MILLIS = 5000;
 
   constructor(private snackBar: MatSnackBar) {
   }

@@ -22,7 +22,7 @@ public class StatisticService {
         LocalDate currentDate = LocalDate.now().withDayOfMonth(1).plusMonths(1).minusYears(1);
 
         Random random = new Random();
-        boolean randomEnabled = false;
+        boolean randomEnabled = true;
         Map<Pair<Integer, Integer>, TaskStatisticDto> statistics = new LinkedHashMap<>();
         for (int i = 0; i < 12; i++) {
             LocalDate date = currentDate.plusMonths(i);

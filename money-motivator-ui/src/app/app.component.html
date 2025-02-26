@@ -5,7 +5,7 @@
         <span [style.cursor]="'pointer'" routerLink="your-work">Money Motivator</span>
         <span class="spacer"></span>
         <div class="mat-toolbar-buttons">
-          <app-new-task-dialog/>
+          <app-new-task-dialog *ngIf="user"/>
           <button mat-button *ngIf="user" routerLink="your-work" routerLinkActive="active">Your work</button>
           <button mat-button *ngIf="user" routerLink="projects" routerLinkActive="active">Projects</button>
           <button mat-button *ngIf="!user" routerLink="login" routerLinkActive="active">Sign In</button>
