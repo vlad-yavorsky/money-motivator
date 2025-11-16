@@ -10,6 +10,7 @@ import { RegistrationComponent } from "./pages/registration/registration.compone
 import { authenticationGuard } from "./guard/auth.guard";
 import { PageNotFoundComponent } from "./pages/page-not-found/page-not-found.component";
 import { AccessDeniedComponent } from "./pages/access-denied/access-denied.component";
+import { Oauth2RedirectComponent } from "./pages/oauth2-redirect/oauth2-redirect.component";
 
 export const routes: Routes = [
   {
@@ -26,6 +27,10 @@ export const routes: Routes = [
     path: 'registration',
     component: RegistrationComponent,
     canActivate: [loginGuard()]
+  },
+  {
+    path: 'oauth2/redirect',
+    component: Oauth2RedirectComponent
   },
   {
     path: 'projects',

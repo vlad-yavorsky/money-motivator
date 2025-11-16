@@ -1,11 +1,14 @@
 package com.bepsik.moneymotivator.service;
 
 import com.bepsik.moneymotivator.dto.BalanceHistoryDto;
+import com.bepsik.moneymotivator.dto.OAuth2UserInfo;
 import com.bepsik.moneymotivator.dto.UserAuthStateDto;
 import com.bepsik.moneymotivator.dto.UserDto;
 import com.bepsik.moneymotivator.entity.BalanceHistory;
 import com.bepsik.moneymotivator.entity.User;
+import com.bepsik.moneymotivator.enumeration.AuthProvider;
 import com.bepsik.moneymotivator.enumeration.BalanceOperation;
+import com.bepsik.moneymotivator.enumeration.Role;
 import com.bepsik.moneymotivator.exception.ConflictException;
 import com.bepsik.moneymotivator.exception.NotFoundException;
 import com.bepsik.moneymotivator.mapper.BalanceHistoryMapper;
@@ -113,4 +116,29 @@ public class UserService implements UserDetailsService {
         var balanceHistory = balanceHistoryRepository.findByUserEmailOrderByDateDesc(currentUserService.getEmail());
         return balanceHistoryMapper.toDto(balanceHistory);
     }
+
+    @Transactional
+    public User processOAuthPostLogin(AuthProvider provider, OAuth2UserInfo userInfo) {
+        return userRepository
+                .findByProviderAndProviderId(provider, userInfo.getId())
+                .orElseGet(() -> userRepository.findByEmail(userInfo.getEmail())
+                        .map(existingUser -> {
+                            existingUser.setProvider(provider);
+                            existingUser.setProviderId(userInfo.getId());
+                            return userRepository.save(existingUser);
+                        })
+                        .orElseGet(() -> {
+                            User newUser = User.builder()
+                                    .email(userInfo.getEmail())
+                                    .firstName(userInfo.getFirstName())
+                                    .lastName(userInfo.getLastName())
+                                    .provider(provider)
+                                    .providerId(userInfo.getId())
+                                    .roles(List.of(Role.ROLE_USER))
+                                    .balance(BigDecimal.ZERO)
+                                    .build();
+                            return userRepository.save(newUser);
+                        }));
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.bepsik.moneymotivator.entity;
 
+import com.bepsik.moneymotivator.enumeration.AuthProvider;
 import com.bepsik.moneymotivator.enumeration.Role;
 import com.bepsik.moneymotivator.service.UserRolesConverter;
 import jakarta.persistence.*;
@@ -46,6 +47,11 @@ public class User implements Serializable, UserDetails {
     private List<Role> roles;
 
     private BigDecimal balance;
+
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
+
+    private String providerId;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

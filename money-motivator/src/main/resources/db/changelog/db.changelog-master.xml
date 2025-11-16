@@ -11,5 +11,6 @@
 
 
     <include file="/db/changelog/202404042153-new-tables-task-user.xml" relativeToChangelogFile="false"/>
+    <include file="/db/changelog/202511160014-google-auth-provider.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

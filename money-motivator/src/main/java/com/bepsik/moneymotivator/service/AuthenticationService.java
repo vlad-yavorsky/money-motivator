@@ -4,6 +4,7 @@ import com.bepsik.moneymotivator.dto.SignInRequestDto;
 import com.bepsik.moneymotivator.dto.SignUpRequestDto;
 import com.bepsik.moneymotivator.dto.UserDto;
 import com.bepsik.moneymotivator.entity.User;
+import com.bepsik.moneymotivator.enumeration.AuthProvider;
 import com.bepsik.moneymotivator.enumeration.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -29,6 +31,8 @@ public class AuthenticationService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .roles(List.of(Role.ROLE_USER))
+                .provider(AuthProvider.LOCAL)
+                .balance(BigDecimal.ZERO)
                 .build();
 
         return userService.create(user);
