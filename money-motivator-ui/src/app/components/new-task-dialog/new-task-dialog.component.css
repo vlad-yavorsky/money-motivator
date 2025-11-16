@@ -1,0 +1,21 @@
+mat-dialog-actions {
+  padding: 16px 24px;
+}
+
+.two-column-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 820px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+}
+
+.form-column {
+  flex: 1 1 auto;
+}

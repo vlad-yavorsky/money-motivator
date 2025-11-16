@@ -8,10 +8,10 @@ export function authenticationGuard(): CanActivateFn {
     const authService: AuthService = inject(AuthService);
     const router: Router = inject(Router);
 
-    console.log('AuthGuard 1')
+    // console.log('AuthGuard 1')
     return authService.isAuthenticated.pipe(
       map(isAuthenticated => {
-        console.log('AuthGuard 2 isAuthenticated', isAuthenticated);
+        // console.log('AuthGuard 2 isAuthenticated', isAuthenticated);
         if (!isAuthenticated) {
           console.log('navigate to /login')
           router.navigate(['/login']);

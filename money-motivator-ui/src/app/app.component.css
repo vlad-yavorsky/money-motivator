@@ -5,9 +5,25 @@
 .my-container {
   display: grid;
   justify-content: center;
-  grid-template-columns: minmax(auto, 1440px);
+  grid-template-columns: minmax(auto, 1600px);
   width: 100%;
   margin: 0 auto;
+}
+
+.mat-toolbar-custom-row {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+  height: var(--mat-toolbar-standard-height);
+}
+
+@media (max-width: 1600px) {
+  .my-container {
+    grid-template-columns: minmax(auto, 1440px);
+  }
 }
 
 @media (max-width: 1440px) {

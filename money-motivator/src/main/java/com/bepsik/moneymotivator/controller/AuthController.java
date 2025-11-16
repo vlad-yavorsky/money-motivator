@@ -3,7 +3,7 @@ package com.bepsik.moneymotivator.controller;
 import com.bepsik.moneymotivator.dto.*;
 import com.bepsik.moneymotivator.service.AuthenticationService;
 import com.bepsik.moneymotivator.service.UserService;
-import com.bepsik.moneymotivator.util.CookieService;
+import com.bepsik.moneymotivator.service.CookieService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

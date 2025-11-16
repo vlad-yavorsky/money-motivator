@@ -5,7 +5,7 @@ import com.bepsik.moneymotivator.entity.User;
 import com.bepsik.moneymotivator.enumeration.AuthProvider;
 import com.bepsik.moneymotivator.service.JwtService;
 import com.bepsik.moneymotivator.service.UserService;
-import com.bepsik.moneymotivator.util.CookieService;
+import com.bepsik.moneymotivator.service.CookieService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

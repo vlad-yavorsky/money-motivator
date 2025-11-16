@@ -1,6 +1,8 @@
 <ng-container>
   <mat-toolbar color="primary">
-      <span [style.cursor]="'pointer'" routerLink="your-work">Money Motivator</span>
+    <div class="my-container">
+      <div class="mat-toolbar-custom-row">
+      <span [style.cursor]="'pointer'" [routerLink]="['/']">Money Motivator</span>
       <span class="spacer"></span>
       <div class="mat-toolbar-buttons">
         <app-new-task-dialog *ngIf="user"/>
@@ -10,6 +12,8 @@
         <button mat-button *ngIf="!user" routerLink="registration" routerLinkActive="active">Sing Up</button>
       </div>
       <app-profile-menu [user]="user" [style.cursor]="'pointer'"/>
+      </div>
+    </div>
   </mat-toolbar>
 
   <div class="my-container">

@@ -1,4 +1,4 @@
-package com.bepsik.moneymotivator.util;
+package com.bepsik.moneymotivator.service;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;

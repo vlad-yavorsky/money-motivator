@@ -14,6 +14,11 @@ import { Oauth2RedirectComponent } from "./pages/oauth2-redirect/oauth2-redirect
 
 export const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'your-work',
+    pathMatch: 'full'
+  },
+  {
     path: 'your-work',
     component: DashboardComponent,
     canActivate: [authenticationGuard()]

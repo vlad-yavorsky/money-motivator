@@ -5,7 +5,7 @@ import { UserModel } from "./model/user.model";
 import { AuthService } from "./service/auth.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { ProfileMenuComponent } from "./components/profile-menu/profile-menu.component";
-import { NewTaskDialogComponent } from "./components/new-task-dialog/new-task-dialog.component";
+import { NewTaskButtonComponent } from "./components/new-task-button/new-task-button.component";
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ import { NewTaskDialogComponent } from "./components/new-task-dialog/new-task-di
     RouterOutlet,
     RouterLinkActive,
     ProfileMenuComponent,
-    NewTaskDialogComponent
+    NewTaskButtonComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

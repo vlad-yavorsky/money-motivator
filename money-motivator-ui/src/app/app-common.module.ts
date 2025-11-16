@@ -22,13 +22,25 @@ import { MatBadgeModule } from "@angular/material/badge";
 import { ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { HighchartsChartModule } from "highcharts-angular";
-import { RouterLink } from "@angular/router";
+import { RouterLink, RouterLinkActive } from "@angular/router";
 import { MatTooltip } from "@angular/material/tooltip";
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerModule,
+  MatDatepickerToggle,
+  MatDateRangeInput,
+  MatDateRangePicker
+} from "@angular/material/datepicker";
+import { MatCheckbox } from "@angular/material/checkbox";
+import { MatTab, MatTabGroup } from "@angular/material/tabs";
+import { MatAutocomplete, MatAutocompleteTrigger } from "@angular/material/autocomplete";
 
 @NgModule({
   imports: [
     CommonModule,
     RouterLink,
+    RouterLinkActive,
     MatSlideToggleModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -51,11 +63,24 @@ import { MatTooltip } from "@angular/material/tooltip";
     MatBadgeModule,
     ReactiveFormsModule,
     HighchartsChartModule,
-    MatTooltip
+    MatTooltip,
+    MatDatepicker,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatCheckbox,
+    MatTabGroup,
+    MatTab,
+    // MatNativeDateModule,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
+    MatDatepickerModule,
+    MatDateRangeInput,
+    MatDateRangePicker
   ],
   exports: [
     CommonModule,
     RouterLink,
+    RouterLinkActive,
     MatSlideToggleModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -78,7 +103,19 @@ import { MatTooltip } from "@angular/material/tooltip";
     MatBadgeModule,
     ReactiveFormsModule,
     HighchartsChartModule,
-    MatTooltip
+    MatTooltip,
+    MatDatepicker,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatCheckbox,
+    MatTabGroup,
+    MatTab,
+    // MatNativeDateModule,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
+    MatDatepickerModule,
+    MatDateRangeInput,
+    MatDateRangePicker
   ]
 })
 export class AppCommonModule {
