@@ -5,7 +5,7 @@ import com.bepsik.moneymotivator.entity.User;
 import com.bepsik.moneymotivator.enumeration.AuthProvider;
 import com.bepsik.moneymotivator.service.JwtService;
 import com.bepsik.moneymotivator.service.UserService;
-import jakarta.servlet.http.Cookie;
+import com.bepsik.moneymotivator.util.CookieService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +18,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 
-import static com.bepsik.moneymotivator.security.JwtAuthenticationFilter.AUTH_TOKEN;
-
 @Component
 @RequiredArgsConstructor
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-
-    private static final int COOKIE_MAX_AGE_SECONDS = 7 * 24 * 60 * 60; // Week
 
     @Value("${app.oauth2.redirect-uri:http://localhost:4200/oauth2/redirect}")
     private String redirectUri;
@@ -32,6 +28,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final JwtService jwtService;
     private final UserService userService;
     private final OAuth2UserInfoExtractor oAuth2UserInfoExtractor;
+    private final CookieService cookieService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -46,12 +43,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         String token = jwtService.generateToken(user);
 
-        Cookie cookie = new Cookie(AUTH_TOKEN, token);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-        cookie.setSecure(true);
-        cookie.setMaxAge(COOKIE_MAX_AGE_SECONDS);
-        response.addCookie(cookie);
+        cookieService.addCookie(response, token);
 
         String targetUrl = UriComponentsBuilder.fromUriString(redirectUri)
                 .queryParam("token", token)
