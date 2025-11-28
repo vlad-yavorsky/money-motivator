@@ -5,9 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class SignUpRequestDto {
 
     @Email
@@ -17,6 +19,7 @@ public class SignUpRequestDto {
 
     @NotBlank
     @Size(max = 255)
+    @ToString.Exclude
     private String password;
 
     @NotBlank

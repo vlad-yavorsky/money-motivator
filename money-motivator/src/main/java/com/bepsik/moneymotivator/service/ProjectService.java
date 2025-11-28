@@ -6,19 +6,17 @@ import com.bepsik.moneymotivator.exception.NotFoundException;
 import com.bepsik.moneymotivator.mapper.ProjectMapper;
 import com.bepsik.moneymotivator.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ProjectService {
-
-    private final Logger log = LoggerFactory.getLogger(ProjectService.class);
 
     private final ProjectRepository projectRepository;
     private final ProjectMapper projectMapper;
@@ -26,18 +24,20 @@ public class ProjectService {
     private final UserService userService;
 
     public List<ProjectDto> findByCurrentUser() {
+        log.info("Find projects by current user");
         var projects = projectRepository.findByCurrentUserEmail(currentUserService.getEmail());
         return projectMapper.toDto(projects);
     }
 
     public ProjectDto findById(Long id) {
+        log.info("Find project by id {}", id);
         verifyAccess(id);
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Project " + id + " not found"));
         return projectMapper.toDto(project);
     }
 
-    void verifyAccess(Long projectId) {
+    private void verifyAccess(Long projectId) {
         if (!projectRepository.existsByProjectIdAndUserEmail(currentUserService.getEmail(), projectId)) {
             throw new NotFoundException("Project " + projectId + " not found or access denied");
         }
@@ -45,6 +45,7 @@ public class ProjectService {
 
     @Transactional
     public ProjectDto create(ProjectDto projectDto) {
+        log.info("Create project {}", projectDto);
         Project project = Project.builder()
                 .name(projectDto.getName())
                 .description(projectDto.getDescription())

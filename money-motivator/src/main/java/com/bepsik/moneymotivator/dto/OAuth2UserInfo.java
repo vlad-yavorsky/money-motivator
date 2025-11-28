@@ -1,14 +1,12 @@
 package com.bepsik.moneymotivator.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class OAuth2UserInfo {
     private String id;
     private String email;

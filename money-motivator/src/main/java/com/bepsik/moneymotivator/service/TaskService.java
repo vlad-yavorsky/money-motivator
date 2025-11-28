@@ -10,6 +10,7 @@ import com.bepsik.moneymotivator.mapper.TaskMapper;
 import com.bepsik.moneymotivator.repository.ProjectRepository;
 import com.bepsik.moneymotivator.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -42,6 +44,7 @@ public class TaskService {
     }
 
     public TaskDto findByIdAndConvert(Long id) {
+        log.info("Find task by id {}", id);
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Task " + id + " not found"));
         verifyAccessToProject(task.getProject().getId());
@@ -56,23 +59,27 @@ public class TaskService {
     }
 
     public List<TaskDto> findAllByProjectId(Long projectId) {
+        log.info("Find all tasks by project id {}", projectId);
         verifyAccessToProject(projectId);
         List<Task> task = taskRepository.findAllByProjectId(projectId);
         return taskMapper.toDto(task);
     }
 
     public List<TaskDto> findAllAssignedToCurrentUser() {
+        log.info("Find all tasks assigned to current user");
         List<Task> task = taskRepository.findAllByAssigneeEmailAndStatusIn(currentUserService.getEmail(), List.of(TaskStatus.NEW, TaskStatus.IN_PROGRESS, TaskStatus.DONE));
         return taskMapper.toDto(task);
     }
 
     public List<TaskDto> findAllOwnedByCurrentUser() {
+        log.info("Find all tasks owned by current user");
         List<Task> task = taskRepository.findAllByAuthorEmailAndStatusIn(currentUserService.getEmail(), List.of(TaskStatus.NEW, TaskStatus.IN_PROGRESS, TaskStatus.DONE));
         return taskMapper.toDto(task);
     }
 
     @Transactional
     public TaskDto createTask(TaskDto taskDto) {
+        log.info("Create new task {}", taskDto);
         verifyAccessToProject(taskDto.getProjectId());
         Task task = taskMapper.toEntity(taskDto);
         task.setAuthor(userService.findByCurrentUser());

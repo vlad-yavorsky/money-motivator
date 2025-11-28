@@ -16,8 +16,7 @@ import com.bepsik.moneymotivator.mapper.UserMapper;
 import com.bepsik.moneymotivator.repository.BalanceHistoryRepository;
 import com.bepsik.moneymotivator.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,12 +27,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class UserService implements UserDetailsService {
-
-    private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -73,12 +71,14 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        log.info("Find user by email {}", email);
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Email " + email + " not found"));
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void addToBalance(User assignee, BigDecimal price) {
+        log.info("Add money '{}' to balance of user {}", price, assignee.getEmail());
         BalanceHistory balanceHistory = BalanceHistory.builder()
                 .user(assignee)
                 .operation(BalanceOperation.DEPOSIT)
@@ -94,6 +94,7 @@ public class UserService implements UserDetailsService {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void withdrawFunds() {
         User user = findByCurrentUser();
+        log.info("Withdraw money from user {}", user.getEmail());
         try {
             // monobankService.sendMoney(user.getCard(), user.getBalance());
             BalanceHistory balanceHistory = BalanceHistory.builder()
@@ -113,6 +114,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public List<BalanceHistoryDto> getBalanceHistory() {
+        log.info("Get balance history");
         var balanceHistory = balanceHistoryRepository.findByUserEmailOrderByDateDesc(currentUserService.getEmail());
         return balanceHistoryMapper.toDto(balanceHistory);
     }

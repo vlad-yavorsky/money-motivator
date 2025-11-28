@@ -3,6 +3,7 @@ package com.bepsik.moneymotivator.service;
 import com.bepsik.moneymotivator.dto.TaskStatisticDto;
 import com.bepsik.moneymotivator.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -19,6 +21,7 @@ public class StatisticService {
     private final CurrentUserService currentUserService;
 
     public Collection<TaskStatisticDto> countTasksByMonths() {
+        log.info("Count tasks by months");
         LocalDate currentDate = LocalDate.now().withDayOfMonth(1).plusMonths(1).minusYears(1);
 
         Random random = new Random();
